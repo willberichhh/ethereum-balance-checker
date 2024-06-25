@@ -1,0 +1,28 @@
+name: Check Ethereum Balances
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check_balances:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install web3
+
+    - name: Run script
+      run: python check_balances.py
+      env:
+        INFURA_PROJECT_ID: ${{ secrets.INFURA_PROJECT_ID }}
